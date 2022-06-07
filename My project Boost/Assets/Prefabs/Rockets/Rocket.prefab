@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 382907338}
   m_Layer: 0
   m_Name: Sound
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -151,12 +151,13 @@ GameObject:
   - component: {fileID: 2714987957883132334}
   - component: {fileID: 2714987957883132305}
   - component: {fileID: 2714987957883132304}
-  - component: {fileID: 2714987957883132307}
   - component: {fileID: 481853980}
   - component: {fileID: 481853979}
+  - component: {fileID: 481853985}
+  - component: {fileID: 481853983}
   m_Layer: 0
   m_Name: Rocket
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -225,19 +226,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &2714987957883132307
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2714987957883132306}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!54 &481853980
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -268,3 +256,32 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   thrustSpeed: 1000
   rotationSpeed: 100
+  thrustClip: {fileID: 8300000, guid: fa23e3f545aca234a929ea2ef3ec1c09, type: 3}
+--- !u!65 &481853985
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2714987957883132306}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &481853983
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2714987957883132306}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aaeccd4eb52f7934c90c14b85cb7e437, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  timeToWait: 1
+  crashClip: {fileID: 8300000, guid: 0ab9d519aa174954b90c08d4f741fb11, type: 3}
+  finishClip: {fileID: 8300000, guid: d87482f860c975a418077db44d4b17bf, type: 3}

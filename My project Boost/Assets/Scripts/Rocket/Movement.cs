@@ -4,9 +4,14 @@ using UnityEngine;
 
 public class Movement : MonoBehaviour
 {
-                    
+    [Header ("Speed")]                 
     [SerializeField] float thrustSpeed = 1000f;
     [SerializeField] float rotationSpeed = 100f;
+
+    [Header("Audio Clip")]
+    [SerializeField] AudioClip thrustClip;
+
+    [Header ("Component")]
                      Rigidbody myRigidBody;
                      SoundController myAudio; 
 
@@ -41,7 +46,7 @@ public class Movement : MonoBehaviour
     {
         if (Input.GetKey(KeyCode.Space))
         {
-            myAudio.StartSound();
+            myAudio.StartSound(thrustClip);
 
             myRigidBody.AddRelativeForce(Vector3.up * thrustSpeed * Time.deltaTime);
         }
@@ -51,7 +56,7 @@ public class Movement : MonoBehaviour
         }
     }
 
-    // In here, we need to freeze the rotation by physics engine cause if we dont, rotating manually and rotating by physics engine will result in a weird bug.
+    // In here, we need to freeze the rotation by physics engine cause if we dont, rotating manually and rotating by physics engine at the same time will result in a weird bug.
     void ApplyRotation(float rotationSpeed)
     {
         myRigidBody.freezeRotation = true; //freeze rotation by physics engine so we can do it manually

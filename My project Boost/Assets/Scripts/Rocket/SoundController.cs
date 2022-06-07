@@ -10,11 +10,11 @@ public class SoundController : MonoBehaviour
         myAudio = this.GetComponent<AudioSource>();
     }
 
-    public void StartSound()
+    public void StartSound(AudioClip myClip)
     {
         if (!myAudio.isPlaying)
         {
-            myAudio.Play();
+            myAudio.PlayOneShot(myClip);
         }
     }
 
