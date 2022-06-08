@@ -11,13 +11,19 @@ public class CollisionController : MonoBehaviour
     [SerializeField] AudioClip crashClip;
     [SerializeField] AudioClip finishClip;
 
+    [Header("Particles System")]
+    [SerializeField] ParticleSystem crashParticle;
+    [SerializeField] ParticleSystem successParticle;
+
     [Header("Component")]
                      SoundController mySoundController;
 
     private void Start()
     {
+        //the ".gameObject" refers to the gameObject that this script is attaching to - in this case, it is "Rocket Outlook" 
+        //the ".transform" refers to the transform component of the gameObject this script is attaching to - in this case, it is "Rocket Outlook"
+        //the "transform.parent" refers to the parent gameObject of the gameObject that has this transform component. 
         mySoundController = this.GetComponentInChildren<SoundController>();
-        Debug.Log(mySoundController);
     }
 
     private void OnCollisionEnter(Collision other)
@@ -61,19 +67,39 @@ public class CollisionController : MonoBehaviour
     }
     private void ReAccessStage()
     {
+        //change status
         isTransitioning = true;
+
+        //play crash sound
         mySoundController.StopSound();
         mySoundController.StartSound(crashClip);
-        this.GetComponent<Movement>().enabled = false;      
+
+        //disable control
+        this.GetComponent<Movement>().enabled = false;
+
+        //play crash particle
+        crashParticle.Play();
+        
+        //reload scene
         Invoke("ReloadScene", timeToWait);
         }
 
     private void AccessNextStage()
     {
+        //change status
         isTransitioning = true;
+
+        //play success sound
         mySoundController.StopSound();
         mySoundController.StartSound(finishClip);
+
+        //disable control
         this.GetComponent<Movement>().enabled = false;
+
+        //play success particle
+        successParticle.Play();
+
+        //load next scene
         Invoke("LoadNextScene", timeToWait);
     }
 

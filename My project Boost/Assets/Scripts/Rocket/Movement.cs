@@ -19,7 +19,7 @@ public class Movement : MonoBehaviour
     void Start()
     {
         myRigidBody = this.GetComponent<Rigidbody>();
-        myAudio = gameObject.GetComponentInChildren<SoundController>(); // take the SoundController component from its own child component : "SoundController"
+        myAudio = this.GetComponentInChildren<SoundController>(); // take the SoundController component from its own child component : "SoundController"
     }
 
     // Update is called once per frame
@@ -53,6 +53,7 @@ public class Movement : MonoBehaviour
         else
         {
             myAudio.StopSound();
+
         }
     }
 
