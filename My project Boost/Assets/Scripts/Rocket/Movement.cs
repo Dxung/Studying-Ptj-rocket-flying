@@ -13,7 +13,13 @@ public class Movement : MonoBehaviour
 
     [Header ("Component")]
                      Rigidbody myRigidBody;
-                     SoundController myAudio; 
+                     SoundController myAudio;
+
+    [Header("Particles")]
+    [SerializeField] ParticleSystem thrustParticle;
+    [SerializeField] ParticleSystem rightRotateParticle;
+    [SerializeField] ParticleSystem leftRotateParticle;
+
 
     // Start is called before the first frame update
     void Start()
@@ -29,16 +35,24 @@ public class Movement : MonoBehaviour
         RocketRotate();
     }
 
+
     void RocketRotate()
     {
-         
+
         if (Input.GetKey(KeyCode.A))
         {
             ApplyRotation(rotationSpeed);
+            PlayParticle(rightRotateParticle);
         }
         else if (Input.GetKey(KeyCode.D))
         {
             ApplyRotation(-rotationSpeed);
+            PlayParticle(leftRotateParticle);
+        }
+        else
+        {
+            StopParticle(leftRotateParticle);
+            StopParticle(rightRotateParticle);
         }
     }
 
@@ -46,13 +60,14 @@ public class Movement : MonoBehaviour
     {
         if (Input.GetKey(KeyCode.Space))
         {
-            myAudio.StartSound(thrustClip);
-
-            myRigidBody.AddRelativeForce(Vector3.up * thrustSpeed * Time.deltaTime);
+            PlaySound(thrustClip);
+            AddRelativeForce(Vector3.up, thrustSpeed);
+            PlayParticle(thrustParticle);
         }
         else
         {
-            myAudio.StopSound();
+            StopSound();
+            StopParticle(thrustParticle);
 
         }
     }
@@ -63,6 +78,39 @@ public class Movement : MonoBehaviour
         myRigidBody.freezeRotation = true; //freeze rotation by physics engine so we can do it manually
         this.transform.Rotate(Vector3.forward * rotationSpeed * Time.deltaTime);
         myRigidBody.freezeRotation = false;
+
+    }
+
+    //Add Relative Force
+    private void AddRelativeForce(Vector3 direction, float speed)
+    {
+        myRigidBody.AddRelativeForce(direction * speed * Time.deltaTime);
+    }
+
+    //Particles
+    private void PlayParticle(ParticleSystem myParticle)
+    {
+        if (!myParticle.isPlaying) // the reason why this is EXTREMELY necessary is: if the particle be replayed over and over many times 1 second (its in Update() ),
+                                   // it can "only played for a shot time (0.001s) before being reloaded", so we will not be able to see any particle .                          
+        {
+            myParticle.Play();
+        }
+       
+    }
+
+    private void StopParticle(ParticleSystem myPartical)
+    {
+        myPartical.Stop();
+    }
+
+    private void PlaySound(AudioClip myClip)
+    {
+        myAudio.StartSound(thrustClip);
+    }
+
+    private void StopSound()
+    {
+        myAudio.StopSound();
 
     }
 }

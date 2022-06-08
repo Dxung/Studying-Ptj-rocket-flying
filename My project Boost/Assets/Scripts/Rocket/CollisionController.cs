@@ -18,6 +18,11 @@ public class CollisionController : MonoBehaviour
     [Header("Component")]
                      SoundController mySoundController;
 
+    [Header("For Debug")]
+                     bool collisionDisable;
+                     
+
+
     private void Start()
     {
         //the ".gameObject" refers to the gameObject that this script is attaching to - in this case, it is "Rocket Outlook" 
@@ -26,13 +31,20 @@ public class CollisionController : MonoBehaviour
         mySoundController = this.GetComponentInChildren<SoundController>();
     }
 
+    private void Update()
+    {
+        ForDebug();
+    }
+
     private void OnCollisionEnter(Collision other)
     {
-        if (isTransitioning == false) // this has to be false, so in case "we crashed and the rocket falls on some obstacles, it will not play the crash sound the 2nd time.
-                                      // or play finish sound
-        {
+        if (isTransitioning || collisionDisable ) { return; } // if we are transitioning, no other method in collision should be called. If not, it will play crash/finish sound the second time
+                                             // or call method ReloadScene()/ LoadNextScene() the second time
+        
+        
             switch (other.gameObject.tag)
             {
+           
                 case "Friendly":
                     Debug.Log("Friendly");
                     break;
@@ -45,7 +57,21 @@ public class CollisionController : MonoBehaviour
                     break;
 
             }
+        
+    }
+
+    private void ForDebug()
+    {
+        if (Input.GetKeyDown(KeyCode.O))
+        {
+            collisionDisable = !collisionDisable ;
+            Debug.Log(collisionDisable);
+        }else if (Input.GetKeyDown(KeyCode.P))
+        {
+            LoadNextScene();
         }
+
+        
     }
 
     private void ReloadScene()
